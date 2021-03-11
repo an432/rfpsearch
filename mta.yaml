@@ -1,19 +1,27 @@
 ID: rfpsearch
 _schema-version: '2.1'
 version: 0.0.1
-
 modules:
- - name: db
-   type: hdb
-   path: db
-   requires:
-    - name: hdi_db
-
+  - name: db
+    type: hdb
+    path: db
+    requires:
+      - name: hdi_db
+  - name: srv
+    type: nodejs
+    path: srv
+    provides:
+      - name: srv_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: hdi_db
+      - name: db
 resources:
- - name: hdi_db
-   parameters:
+  - name: hdi_db
+    parameters:
       config:
-         schema: rfpsearch
-   properties:
-      hdi-container-name: ${service-name}
-   type: com.sap.xs.hdi-container
+        schema: rfpsearch
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
